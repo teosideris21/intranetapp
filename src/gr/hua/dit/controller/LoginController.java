@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URLEncoder;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,17 +38,19 @@ public class LoginController {
 	}
 
 	@RequestMapping("/loginForm")
-	public String loginUser(HttpServletRequest request, @ModelAttribute("user") User user) {
+	public String loginUser(HttpServletRequest request, @ModelAttribute("user") User user, HttpServletResponse response)
+			throws ServletException, IOException {
 		// save the customer using the service
 		User loguser = loginService.loginUser(request.getParameter("username"));
 
 		String username = request.getParameter("username");
 		if (loguser == null) {
-			request.setAttribute("loginResult", true);
+			request.setAttribute("message", "This user does not exist");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/login-form.jsp");
+			rd.forward(request, response);
 			return "redirect:showLoginForm";
 		} else {
 			if (loguser.getPassword().equals(request.getParameter("password"))) {
-				System.out.println("correct password");
 				if (loguser.getRole().equals("Administrator")) {
 					return "admin-form";
 				} else if (loguser.getRole().equals("Secretariat")) {
@@ -55,7 +59,9 @@ public class LoginController {
 					return "technician-form";
 				}
 			} else {
-				System.out.println("Wrong password");
+				request.setAttribute("message", "Incorrect password");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/login-form.jsp");
+				rd.forward(request, response);
 				// return to the login form
 				return "redirect:showLoginForm";
 			}
@@ -115,6 +121,31 @@ public class LoginController {
 		return "admin-form";
 	}
 
+	@RequestMapping("/createUser")
+	public String createUser(HttpServletRequest request, @ModelAttribute("user") User user) {
+		loginService.saveUser(user);
+		return "redirect:/login/adminForm";
+	}
+
+	@RequestMapping("/deleteUser")
+	public String deleteUser(HttpServletRequest request, @ModelAttribute("user") User user,
+			HttpServletResponse response) throws ServletException, IOException {
+		try {
+			loginService.deleteUser(user);
+		} catch (java.lang.IllegalArgumentException e) {
+			request.setAttribute("message", "Username does not exist");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/admin-form.jsp");
+			rd.forward(request, response);
+		}
+		return "redirect:/login/adminForm";
+	}
+
+	@RequestMapping("/updateUser")
+	public String updateUser(HttpServletRequest request, @ModelAttribute("user") User user) {
+		loginService.deleteUser(user);
+		return "redirect:/login/UpdateUser";
+	}
+
 	@GetMapping("/technicianForm")
 	public String technicianForm(Model model) {
 		// create model attribute to get form data
@@ -136,4 +167,22 @@ public class LoginController {
 		model.addAttribute("pageTitle", "Secretariat");
 		return "secretariat-form";
 	}
+
+	@GetMapping("/UpdateUser")
+	public String userUpdate(Model model) {
+		// create model attribute to get form data
+		User user = new User();
+		model.addAttribute("user", user);
+
+		// add page title
+		model.addAttribute("pageTitle", "Update");
+		return "update-user";
+	}
+	
+	@RequestMapping("/updateUseradd")
+	public String updateUseradd(HttpServletRequest request, @ModelAttribute("user") User user) {
+		loginService.saveUser(user);
+		return "redirect:/login/adminForm";
+	}
+	
 }

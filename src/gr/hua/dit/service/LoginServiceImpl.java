@@ -27,4 +27,22 @@ public class LoginServiceImpl implements LoginService {
 		public Vehicle checkDB(String license_plate) {
 			return logDao.checkDB(license_plate);
 		}
+		
+		@Override
+		@Transactional
+		public void saveUser(User user) {
+			logDao.saveUser(user);
+		}
+		
+		@Override
+		@Transactional
+		public void deleteUser(User user) {
+			logDao.deleteUser(user);
+		}
+		
+		@Override
+		@Transactional
+		public void updateUser(User user) {
+			logDao.updateUser(user);
+		}
 }
