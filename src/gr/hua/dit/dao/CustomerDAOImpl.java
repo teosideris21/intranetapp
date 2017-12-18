@@ -54,13 +54,13 @@ public class CustomerDAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public void deleteCustomer(int id) {
+	public void deleteCustomer(Customer customer) {
 		
 		// get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		
 		// find the customer
-		Customer customer = currentSession.get(Customer.class, id);
+		 customer = currentSession.get(Customer.class, customer.getId());
 
 		
 		// delete customer

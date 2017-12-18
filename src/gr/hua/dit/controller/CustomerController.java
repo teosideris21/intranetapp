@@ -60,12 +60,30 @@ public class CustomerController {
 		return "customer-form";
 	}
 	
+	@GetMapping("/showDeleteForm")
+	public String showDeleteForm(Model model) {
+		// create model attribute to get form data
+		Customer customer = new Customer();
+		model.addAttribute("customer", customer);
+		
+		// add page title
+		model.addAttribute("pageTitle", "Delete Customer");
+		return "delete-customer";
+	}
+	
+	@PostMapping("/deleteCustomer")
+	public String deleteCustomer(@ModelAttribute("customer") Customer customer) {
+		// create model attribute to get form data
+		customerService.deleteCustomer(customer);
+		return "redirect:/login/secretariatForm";
+	}
+	
 	@PostMapping("/saveCustomer")
 	public String saveCustomer(@ModelAttribute("customer") Customer customer) {
 		// save the customer using the service
 		customerService.saveCustomer(customer);
 		
-		return "redirect:/customer/list";
+		return "redirect:/login/secretariatForm";
 	}
 	
 	@GetMapping("/showLoginForm")

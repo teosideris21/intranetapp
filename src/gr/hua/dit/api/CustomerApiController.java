@@ -37,11 +37,6 @@ public class CustomerApiController {
 		return customer;
 	}
 
-	@RequestMapping(value="/delete/{id}", method= RequestMethod.DELETE, produces = { "application/json", "application/xml" })
-	public ResponseEntity deleteCustomer(@PathVariable("id") int id) {
-		customerService.deleteCustomer(id);
-		return new ResponseEntity(HttpStatus.OK);
-	}
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET, produces = { "application/json", "application/xml" })
 	public CustomerList getCustomers() {
