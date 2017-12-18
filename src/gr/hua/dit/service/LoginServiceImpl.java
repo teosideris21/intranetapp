@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import gr.hua.dit.dao.LoginDAO;
 import gr.hua.dit.entity.User;
+import gr.hua.dit.entity.Vehicle;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -19,5 +20,11 @@ public class LoginServiceImpl implements LoginService {
 		@Transactional
 		public User loginUser(String username) {
 			return logDao.loginUser(username);
+		}
+		
+		@Override
+		@Transactional
+		public Vehicle checkDB(String license_plate) {
+			return logDao.checkDB(license_plate);
 		}
 }

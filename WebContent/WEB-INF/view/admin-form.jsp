@@ -20,7 +20,7 @@
 	<div>
 		<h3>Delete a user</h3>
 		<form action="deleteUser">
-			<input type="number" name="userid" placeholder="id"> <br> <br><input
+			<input type="text" name="userid" placeholder="id"> <br> <br><input
 				type="submit" value="Delete">
 		</form>
 <br>

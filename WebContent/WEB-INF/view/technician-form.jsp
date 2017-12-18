@@ -14,11 +14,8 @@
 <h4>Results</h4>
 <input type="radio" name="carErrors" value="true">Success<br>
 <input type="radio" name="carErrors" value="false">Failure
-<h4>Arrived in time</h4>
-<input type="radio" name="intime" value="true">Yes<br>
-<input type="radio" name="outoftime" value="false">No<br>
 <br>
-
+<br>
 <input type="submit" value="Create">
 <br>
 <br>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import gr.hua.dit.entity.Customer;
 import gr.hua.dit.entity.User;
+import gr.hua.dit.entity.Vehicle;
 
 
 
@@ -29,6 +30,17 @@ public  class LoginDAOImpl implements LoginDAO {
 		// save the customer
 		User user = (User) currentSession.get(User.class, username);
 		return user;
+		
+	}
+	
+	@Override
+	@Transactional
+	public Vehicle checkDB(String license_plate) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// save the customer
+		Vehicle vehicle = (Vehicle) currentSession.get(Vehicle.class, license_plate);
+		return vehicle;
 		
 	}
 }

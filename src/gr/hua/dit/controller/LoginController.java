@@ -1,5 +1,9 @@
 package gr.hua.dit.controller;
 
+import java.io.IOException;
+import java.net.URLEncoder;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import gr.hua.dit.entity.User;
+import gr.hua.dit.entity.Vehicle;
 import gr.hua.dit.service.LoginService;
 
 @Controller
@@ -57,7 +62,47 @@ public class LoginController {
 		}
 
 	}
-	
+
+	@RequestMapping("/searchDB")
+	public String searchVehicle(HttpServletRequest request, @ModelAttribute("vehicleDB") Vehicle vehicle,
+			HttpServletResponse response) {
+
+		Vehicle vhcl = loginService.checkDB(request.getParameter("id"));
+
+		if (vhcl == null) {
+
+			System.out.println("This vehicle does not exist into DB");
+			return "redirect:secretariatForm";
+
+		} else {
+			if (vhcl.getInsurance().equals("yes")) {
+				System.out.println("Successfull check");
+				if (vhcl.getType().equals("car")) {
+					if (vhcl.getSub_type() > 1800) {
+						System.out.println("80$");
+						return "redirect:secretariatForm";
+					} else {
+						System.out.println("50$");
+						return "redirect:secretariatForm";
+					}
+				} else {
+					if (vhcl.getSub_type() > 3) {
+						System.out.println("150$");
+						return "redirect:secretariatForm";
+					} else {
+						System.out.println("100$");
+						return "redirect:secretariatForm";
+					}
+				}
+
+			} else {
+				System.out.println("Uninsured vehicle");
+				System.out.println("200$");
+				return "redirect:secretariatForm";
+			}
+		}
+
+	}
 
 	@GetMapping("/adminForm")
 	public String adminForm(Model model) {
@@ -69,7 +114,6 @@ public class LoginController {
 		model.addAttribute("pageTitle", "Admin");
 		return "admin-form";
 	}
-	
 
 	@GetMapping("/technicianForm")
 	public String technicianForm(Model model) {

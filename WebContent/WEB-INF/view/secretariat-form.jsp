@@ -14,13 +14,16 @@
 		<input type="button" value="Delete"
 			onclick="window.location.href='${pageContext.request.contextPath}/customer/showDeleteForm'" />
 	</form>
-
+<form action="searchDB" modelAttribute="vehicleDB" method="POST">
 	<h3>Search db</h3>
-	<input type="number" name="id" placeholder="License Plate" />&nbsp
+<input type="text" name="id" placeholder="License Plate" />&nbsp
 	&nbsp <input type="submit" value="Search"><br>
-	<font color="red">  ${message} </font>
-	<h3>Insured Vehicle</h3>
-	<input type="radio" name="insured" value="true">Yes<br> <input
-		type="radio" name="uninsured" value="false">No<br>
-	</form>
+	
+	<h4>Arrived in time</h4>
+<input type="radio" name="intime" value="true">Yes<br>
+<input type="radio" name="outoftime" value="false">No<br>
+<br>
+	
+<font color="red">  ${message} </font>
 	<h3>Total Payment for customer</h3>
+	</form>
