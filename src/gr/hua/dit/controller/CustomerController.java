@@ -75,7 +75,7 @@ public class CustomerController {
 	public String deleteCustomer(@ModelAttribute("customer") Customer customer) {
 		// create model attribute to get form data
 		customerService.deleteCustomer(customer);
-		return "redirect:/login/secretariatForm";
+		return "redirect:/user/secretariatForm";
 	}
 	
 	@PostMapping("/saveCustomer")
@@ -83,7 +83,7 @@ public class CustomerController {
 		// save the customer using the service
 		customerService.saveCustomer(customer);
 		
-		return "redirect:/login/secretariatForm";
+		return "redirect:/user/secretariatForm";
 	}
 	
 	@GetMapping("/showLoginForm")
