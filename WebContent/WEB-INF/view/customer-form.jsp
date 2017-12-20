@@ -2,7 +2,7 @@
 
 <div class="ui segment">
 
-	<h3>Add a Customer</h3>
+	<br><h3>Add a Customer</h3>
 
 	<form:form action="saveCustomer" modelAttribute="customer" method="POST" class="ui form">
 		<div class="field">

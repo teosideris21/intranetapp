@@ -20,77 +20,84 @@ import gr.hua.dit.service.CustomerService;
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
-	
+
 	// inject the customer service
 	@Autowired
 	private CustomerService customerService;
-	
+
 	@GetMapping("/list")
 	public String listCustomers(Model model) {
-		
+
 		// get customers from the service
 		List<Customer> customers = customerService.getCustomers();
-		
+
 		// add the customers to the model
-		model.addAttribute("customers",customers);
-		
+		model.addAttribute("customers", customers);
+
 		// add page title
 		model.addAttribute("pageTitle", "List Customers");
 		return "list-customers";
 	}
-	
+
 	@GetMapping("/{id}")
 	public String getCustomer(Model model, @PathVariable("id") int id) {
 		// get the customer
 		Customer customer = customerService.getCustomer(id);
-		
+
 		model.addAttribute("customer", customer);
-		
+
 		return "customer-form";
 	}
-	
+
 	@GetMapping("/showAddForm")
 	public String showAddForm(Model model) {
 		// create model attribute to get form data
 		Customer customer = new Customer();
 		model.addAttribute("customer", customer);
-		
+
 		// add page title
 		model.addAttribute("pageTitle", "Add Customer");
 		return "customer-form";
 	}
-	
+
 	@GetMapping("/showDeleteForm")
 	public String showDeleteForm(Model model) {
 		// create model attribute to get form data
+		List<Customer> customers = customerService.getCustomers();
+
+		// add the customers to the model
+		model.addAttribute("customers", customers);
+
+		// add page title
+		model.addAttribute("pageTitle", "List Customers");
 		Customer customer = new Customer();
 		model.addAttribute("customer", customer);
-		
+
 		// add page title
 		model.addAttribute("pageTitle", "Delete Customer");
 		return "delete-customer";
 	}
-	
+
 	@PostMapping("/deleteCustomer")
 	public String deleteCustomer(@ModelAttribute("customer") Customer customer) {
 		// create model attribute to get form data
 		customerService.deleteCustomer(customer);
 		return "redirect:/user/secretariatForm";
 	}
-	
+
 	@PostMapping("/saveCustomer")
 	public String saveCustomer(@ModelAttribute("customer") Customer customer) {
 		// save the customer using the service
 		customerService.saveCustomer(customer);
-		
+
 		return "redirect:/user/secretariatForm";
 	}
-	
+
 	@GetMapping("/showLoginForm")
 	public String showLoginForm(HttpServletRequest request, Model model, HttpServletResponse response) {
 		// create model attribute to get form data
-	//	User user = new User();
-	//	model.addAttribute("user", user);
+		// User user = new User();
+		// model.addAttribute("user", user);
 
 		// add page title
 		model.addAttribute("pageTitle", "Login");

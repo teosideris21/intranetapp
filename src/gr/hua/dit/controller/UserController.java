@@ -1,17 +1,23 @@
 package gr.hua.dit.controller;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.NestedServletException;
 
+import gr.hua.dit.entity.Customer;
 import gr.hua.dit.entity.User;
 import gr.hua.dit.entity.Vehicle;
 import gr.hua.dit.entity.Vehicle_card;
@@ -100,55 +106,55 @@ public class UserController {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		Vehicle vhcl = loginService.checkDB(request.getParameter("id"));
-		if (vhcl == null) {
-			request.setAttribute("message", "This vehicle does not exist into DB");
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
-			rd.forward(request, response);
+			if (vhcl == null) {
 
-			return "redirect:/user/secretariatForm";
-
-		} else {
-			if (vhcl.getInsurance().equals("yes")) {
-				System.out.println("Successfull check");
-				if (vhcl.getType().equals("car")) {
-					if (vhcl.getSub_type() > 1800) {
-
-						request.setAttribute("payment", "80");
-						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
-						rd.forward(request, response);
-						return "redirect:/user/secretariatForm";
-					} else {
-
-						request.setAttribute("payment", "50");
-						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
-						rd.forward(request, response);
-						return "redirect:/user/secretariatForm";
-					}
-				} else {
-					if (vhcl.getSub_type() > 3) {
-
-						request.setAttribute("payment", "150");
-						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
-						rd.forward(request, response);
-						return "redirect:/user/secretariatForm";
-					} else {
-
-						request.setAttribute("payment", "100");
-						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
-						rd.forward(request, response);
-						return "redirect:/user/secretariatForm";
-					}
-				}
-
-			} else {
-
-				request.setAttribute("payment", "200");
+				request.setAttribute("message", "This vehicle does not exist into DB");
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
 				rd.forward(request, response);
-				return "redirect:/user/secretariatForm";
-			}
 
-		}
+				return "redirect:/user/secretariatForm";
+
+			} else {
+				if (vhcl.getInsurance().equals("yes")) {
+					if (vhcl.getType().equals("car")) {
+						if (vhcl.getSub_type() > 1800) {
+
+							request.setAttribute("payment", "80");
+							RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
+							rd.forward(request, response);
+							return "redirect:/user/secretariatForm";
+						} else {
+
+							request.setAttribute("payment", "50");
+							RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
+							rd.forward(request, response);
+							return "redirect:/user/secretariatForm";
+						}
+					} else {
+						if (vhcl.getSub_type() > 3) {
+
+							request.setAttribute("payment", "150");
+							RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
+							rd.forward(request, response);
+							return "redirect:/user/secretariatForm";
+						} else {
+
+							request.setAttribute("payment", "100");
+							RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
+							rd.forward(request, response);
+							return "redirect:/user/secretariatForm";
+						}
+					}
+
+				} else {
+
+					request.setAttribute("payment", "200");
+					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
+					rd.forward(request, response);
+					return "redirect:/user/secretariatForm";
+				}
+
+			}
 
 	}
 
