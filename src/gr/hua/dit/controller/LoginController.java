@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import gr.hua.dit.entity.User;
 import gr.hua.dit.entity.Vehicle;
+import gr.hua.dit.entity.Vehicle_card;
 import gr.hua.dit.service.LoginService;
 
 @Controller
@@ -71,13 +72,14 @@ public class LoginController {
 
 	@RequestMapping("/searchDB")
 	public String searchVehicle(HttpServletRequest request, @ModelAttribute("vehicleDB") Vehicle vehicle,
-			HttpServletResponse response) {
-
-		Vehicle vhcl = loginService.checkDB(request.getParameter("id"));
-
+			HttpServletResponse response) throws ServletException, IOException {
+	
+			Vehicle vhcl = loginService.checkDB(request.getParameter("id"));
 		if (vhcl == null) {
-
-			System.out.println("This vehicle does not exist into DB");
+			request.setAttribute("message","This vehicle does not exist into DB");
+			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");            
+			rd.forward(request, response);
+			
 			return "redirect:secretariatForm";
 
 		} else {
@@ -85,29 +87,45 @@ public class LoginController {
 				System.out.println("Successfull check");
 				if (vhcl.getType().equals("car")) {
 					if (vhcl.getSub_type() > 1800) {
-						System.out.println("80$");
+				
+						request.setAttribute("payment","80");
+						RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");            
+						rd.forward(request, response);
 						return "redirect:secretariatForm";
 					} else {
-						System.out.println("50$");
+					
+						request.setAttribute("payment","50");
+						RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");            
+						rd.forward(request, response);
 						return "redirect:secretariatForm";
 					}
 				} else {
 					if (vhcl.getSub_type() > 3) {
-						System.out.println("150$");
+				
+						request.setAttribute("payment","150");
+						RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");            
+						rd.forward(request, response);
 						return "redirect:secretariatForm";
 					} else {
-						System.out.println("100$");
+					
+						request.setAttribute("payment","100");
+						RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");            
+						rd.forward(request, response);
 						return "redirect:secretariatForm";
 					}
 				}
 
 			} else {
-				System.out.println("Uninsured vehicle");
-				System.out.println("200$");
+				
+				request.setAttribute("payment","200");
+				RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");            
+				rd.forward(request, response);
 				return "redirect:secretariatForm";
 			}
+			
 		}
-
+		
+			
 	}
 
 	@GetMapping("/adminForm")
@@ -133,7 +151,7 @@ public class LoginController {
 		try {
 			loginService.deleteUser(user);
 		} catch (java.lang.IllegalArgumentException e) {
-			request.setAttribute("message", "Username does not exist");
+			request.setAttribute("delete_msg", "Username does not exist");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/admin-form.jsp");
 			rd.forward(request, response);
 		}
@@ -141,8 +159,15 @@ public class LoginController {
 	}
 
 	@RequestMapping("/updateUser")
-	public String updateUser(HttpServletRequest request, @ModelAttribute("user") User user) {
-		loginService.deleteUser(user);
+	public String updateUser(HttpServletRequest request, @ModelAttribute("user") User user,
+			HttpServletResponse response) throws ServletException, IOException {
+		try {
+			loginService.deleteUser(user);
+		} catch (java.lang.IllegalArgumentException e) {
+			request.setAttribute("update_msg", "Username does not exist");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/admin-form.jsp");
+			rd.forward(request, response);
+		}
 		return "redirect:/login/UpdateUser";
 	}
 
@@ -156,6 +181,21 @@ public class LoginController {
 		model.addAttribute("pageTitle", "Technician");
 		return "technician-form";
 	}
+	
+	@RequestMapping("/createCard")
+	public String createCard(HttpServletRequest request, @ModelAttribute("vehicle_card") Vehicle_card vehicle) {
+		System.out.println(vehicle.getLicense_plate());
+		loginService.createCard(vehicle);
+		System.out.println("OK1");
+		return "redirect:/login/technicianForm";
+	}
+	
+	
+	
+	
+	
+	
+	
 
 	@GetMapping("/secretariatForm")
 	public String secretariatForm(Model model) {

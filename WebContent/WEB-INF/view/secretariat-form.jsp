@@ -24,6 +24,34 @@
 <input type="radio" name="outoftime" value="false">No<br>
 <br>
 	
-<font color="red">  ${message} </font>
-	<h3>Total Payment for customer</h3>
+	<font color="red">  ${message} </font>
+	<h3>Total Payment for customer:</h3>
+	
+	<%
+String login_msg=(String)request.getAttribute("payment");  
+			
+if(login_msg!=null){
+	int no = Integer.parseInt(login_msg);
+	if(no<200){
+	if("false".equals(request.getParameter("intime"))){
+		System.out.println("ok");
+		no=no+no/2;
+		login_msg="Citizen must pay"+no+" $ in total for not being in time and for the tecnhical check";
+		
+		out.println("<font color=red size=4px>"+login_msg+"</font>");
+		
+	}else{
+		login_msg="Citizen must pay"+no+" $ in total  for the  tecnhical check";
+		out.println("<font color=red size=4px>"+login_msg+"</font>");	
+	
+	}
+	}else{
+		login_msg="Citizen must pay"+no+ " $ in total  for not having insurance";
+		out.println("<font color=red size=4px>"+login_msg+"</font>");
+	}
+}
+
+
+%>
+	
 	</form>

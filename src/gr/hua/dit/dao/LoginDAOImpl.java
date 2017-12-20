@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import gr.hua.dit.entity.Customer;
 import gr.hua.dit.entity.User;
 import gr.hua.dit.entity.Vehicle;
+import gr.hua.dit.entity.Vehicle_card;
 
 @Repository
 public class LoginDAOImpl implements LoginDAO {
@@ -74,5 +75,19 @@ public class LoginDAOImpl implements LoginDAO {
 		user.setEmail("email");
 		// delete customer
 		currentSession.update(user);
+	}
+	
+	
+	@Override
+	public void createCard(Vehicle_card vehicle) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		System.out.println(vehicle.getLicense_plate());
+		System.out.println(vehicle.getInspection_date());
+		System.out.println(vehicle.getNext_inspection_date());
+		System.out.println(vehicle.getModel());
+		System.out.println(vehicle.getResults());
+		
+		// save the customer
+		currentSession.save(vehicle);
 	}
 }

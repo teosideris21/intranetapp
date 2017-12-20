@@ -2,21 +2,23 @@
 <br><br>
 <h3>Create Vehicle Card</h3> 
 <form action="createCard" method="POST">
-<input type="text" name="licenseplate" placeholder="License Plate"/><br><br>
-<input type="date" name="inspectiondate" placeholder="Inspection Date"/><br><br>
-<input type="date" name="nextinspectiondate" placeholder="NextInspectionDate"/>
-
+<input type="text" name="license_plate" placeholder="License Plate"/><br>
+<h4>Inspection Date</h4>
+<input type="date" name="inspection_date" placeholder="inspection_date"/><br>
+<h4>Next Inspection Date</h4>
+<input type="date" name="next_inspection_date" placeholder="next_inspection_date"/><br>
 <h4>ModelType</h4>
-<input type="radio" name="modelType" value="car<=1800cc" checked> car<=1800cc<br>
-<input type="radio" name="modelType" value="car>1800cc">car>1800cc<br>
-<input type="radio" name="modelType" value="truck<=3t"> truck<=3t<br>
-<input type="radio" name="modelType" value="truck>3t"> truck>3t<br>
+<input type="radio" name="model" value="car" checked> car<br>
+<input type="radio" name="model" value="truck"> truck<br>
+<h4>CC</h4>
+<input type="text" name="cc" placeholder="CC"/><br>
 <h4>Results</h4>
-<input type="radio" name="carErrors" value="true">Success<br>
-<input type="radio" name="carErrors" value="false">Failure
+<input type="radio" name="results" value="Success">Success<br>
+<input type="radio" name="results" value="Failure">Failure
 <br>
 <br>
 <input type="submit" value="Create">
+</form>
 <br>
 <br>
 <h3>Update Vehicle Card</h3>

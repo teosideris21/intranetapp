@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import gr.hua.dit.dao.LoginDAO;
 import gr.hua.dit.entity.User;
 import gr.hua.dit.entity.Vehicle;
+import gr.hua.dit.entity.Vehicle_card;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -44,5 +45,13 @@ public class LoginServiceImpl implements LoginService {
 		@Transactional
 		public void updateUser(User user) {
 			logDao.updateUser(user);
+		}
+		
+		
+		@Override
+		@Transactional
+		public void createCard(Vehicle_card vehicle) {
+			System.out.println("OK2");
+			logDao.createCard(vehicle);
 		}
 }

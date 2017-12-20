@@ -28,9 +28,9 @@
 		</form>
 		<br>
 		<%
-			String login_msg = (String) request.getAttribute("message");
-			if (login_msg != null)
-				out.println("<font color=red size=4px>" + login_msg + "</font>");
+			String delete_msg = (String) request.getAttribute("delete_msg");
+			if (delete_msg != null)
+				out.println("<font color=red size=4px>" + delete_msg + "</font>");
 		%>
 		<div>
 			<h3>Update a user</h3>
@@ -38,3 +38,9 @@
 				<input type="text" name="username" placeholder="username"><br>
 				<br> <input type="submit" value="Update">
 			</form>
+			<br>
+		<%
+			String update_msg = (String) request.getAttribute("update_msg");
+			if (update_msg != null)
+				out.println("<font color=red size=4px>" + update_msg + "</font>");
+		%>
