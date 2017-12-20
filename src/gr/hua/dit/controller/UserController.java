@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.exception.GenericJDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,11 @@ public class UserController {
 
 	@GetMapping("/adminForm")
 	public String adminForm(Model model) {
+		// get customers from the service
+		List<User> users = loginService.getCustomers();
+		// add the customers to the model
+		model.addAttribute("users", users);
+
 		// create model attribute to get form data
 		User user = new User();
 		model.addAttribute("user", user);
@@ -42,21 +48,24 @@ public class UserController {
 	}
 
 	@RequestMapping("/createUser")
-	public String createUser(HttpServletRequest request, @ModelAttribute("user") User user) {
+	public String createUser(HttpServletRequest request, @ModelAttribute("user") User user,
+			HttpServletResponse response) throws ServletException, IOException {
+		try {
 		loginService.saveUser(user);
+		}catch(DataIntegrityViolationException e) {
+			request.setAttribute("create", "create failed");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/admin-form.jsp");
+			rd.forward(request, response);
+		}
 		return "redirect:/user/adminForm";
 	}
 
 	@RequestMapping("/deleteUser")
 	public String deleteUser(HttpServletRequest request, @ModelAttribute("user") User user,
 			HttpServletResponse response) throws ServletException, IOException {
-		try {
-			loginService.deleteUser(user);
-		} catch (java.lang.IllegalArgumentException e) {
-			request.setAttribute("delete_msg", "Username does not exist");
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/admin-form.jsp");
-			rd.forward(request, response);
-		}
+		System.out.println(request.getParameter("username"));
+		loginService.deleteUser(user);
+		System.out.println("OK5");
 		return "redirect:/user/adminForm";
 	}
 
@@ -106,55 +115,55 @@ public class UserController {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		Vehicle vhcl = loginService.checkDB(request.getParameter("id"));
-			if (vhcl == null) {
+		if (vhcl == null) {
 
-				request.setAttribute("message", "This vehicle does not exist into DB");
-				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
-				rd.forward(request, response);
+			request.setAttribute("message", "This vehicle does not exist into DB");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
+			rd.forward(request, response);
 
-				return "redirect:/user/secretariatForm";
+			return "redirect:/user/secretariatForm";
 
-			} else {
-				if (vhcl.getInsurance().equals("yes")) {
-					if (vhcl.getType().equals("car")) {
-						if (vhcl.getSub_type() > 1800) {
+		} else {
+			if (vhcl.getInsurance().equals("yes")) {
+				if (vhcl.getType().equals("car")) {
+					if (vhcl.getSub_type() > 1800) {
 
-							request.setAttribute("payment", "80");
-							RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
-							rd.forward(request, response);
-							return "redirect:/user/secretariatForm";
-						} else {
-
-							request.setAttribute("payment", "50");
-							RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
-							rd.forward(request, response);
-							return "redirect:/user/secretariatForm";
-						}
+						request.setAttribute("payment", "80");
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
+						rd.forward(request, response);
+						return "redirect:/user/secretariatForm";
 					} else {
-						if (vhcl.getSub_type() > 3) {
 
-							request.setAttribute("payment", "150");
-							RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
-							rd.forward(request, response);
-							return "redirect:/user/secretariatForm";
-						} else {
-
-							request.setAttribute("payment", "100");
-							RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
-							rd.forward(request, response);
-							return "redirect:/user/secretariatForm";
-						}
+						request.setAttribute("payment", "50");
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
+						rd.forward(request, response);
+						return "redirect:/user/secretariatForm";
 					}
-
 				} else {
+					if (vhcl.getSub_type() > 3) {
 
-					request.setAttribute("payment", "200");
-					RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
-					rd.forward(request, response);
-					return "redirect:/user/secretariatForm";
+						request.setAttribute("payment", "150");
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
+						rd.forward(request, response);
+						return "redirect:/user/secretariatForm";
+					} else {
+
+						request.setAttribute("payment", "100");
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
+						rd.forward(request, response);
+						return "redirect:/user/secretariatForm";
+					}
 				}
 
+			} else {
+
+				request.setAttribute("payment", "200");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
+				rd.forward(request, response);
+				return "redirect:/user/secretariatForm";
 			}
+
+		}
 
 	}
 

@@ -1,11 +1,13 @@
 package gr.hua.dit.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +22,24 @@ public class LoginDAOImpl implements LoginDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
 
+	
+	@Override
+	public List<User> getCustomers() {
+		// get current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		System.out.println("OK3");
+		// create a query
+		Query<User> query = currentSession.createQuery("from User order by username", 
+				User.class);
+		System.out.println("OK4");
+		
+		// execute the query and get the results list
+		List<User> users = query.getResultList();
+		System.out.println("OK5");
+		//return the results
+		return users;
+	}
+	
 	@Override
 	public User loginUser(String username) {
 		Session currentSession = sessionFactory.getCurrentSession();
@@ -52,12 +72,13 @@ public class LoginDAOImpl implements LoginDAO {
 	public void deleteUser(User user) {
 		// get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-
+		System.out.println("OK2");
 		// find the customer
 		user = currentSession.get(User.class, user.getUsername());
-
+		System.out.println("OK3");
 		// delete customer
 		currentSession.delete(user);
+		System.out.println("OK4");
 	}
 	
 	@Override

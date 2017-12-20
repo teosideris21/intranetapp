@@ -1,10 +1,15 @@
 package gr.hua.dit.service;
 
+import java.util.List;
+
 import gr.hua.dit.entity.User;
 import gr.hua.dit.entity.Vehicle;
 import gr.hua.dit.entity.Vehicle_card;
 
 public interface LoginService {
+	
+	public List<User> getCustomers();
+	
 	public User loginUser(String username);
 	
 	public Vehicle checkDB(String license_plate);

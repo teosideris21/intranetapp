@@ -15,15 +15,25 @@
 			<option value="Administrator">Administrator</option>
 			<option value="Secretariat">Secretariat</option>
 			<option value="Technician">Technician</option>
-		</select><br>
-		<br> <input type="submit" value="Create">
+		</select><br> <br> <input type="submit" value="Create">
 	</form>
+	<br>
+	<%
+				String create_msg = (String) request.getAttribute("create");
+				if (create_msg != null)
+					out.println("<font color=red size=3px>" + create_msg + "</font>");
+			%>
 	<br>
 	<div>
 		<h3>Delete a user</h3>
 		<form action="deleteUser">
-			<input type="text" name="username" placeholder="username"> <br>
-			<br>
+			<select id="username" name="username">
+				<c:forEach var="tempCustomer" items="${users}">
+
+					<option value=${tempCustomer.username}>${tempCustomer.username}</option>
+					
+				</c:forEach>
+			</select> <br> <br> 
 			<input type="submit" value="Delete">
 		</form>
 		<br>
@@ -39,8 +49,8 @@
 				<br> <input type="submit" value="Update">
 			</form>
 			<br>
-		<%
-			String update_msg = (String) request.getAttribute("update_msg");
-			if (update_msg != null)
-				out.println("<font color=red size=4px>" + update_msg + "</font>");
-		%>
+			<%
+				String update_msg = (String) request.getAttribute("update_msg");
+				if (update_msg != null)
+					out.println("<font color=red size=4px>" + update_msg + "</font>");
+			%>
