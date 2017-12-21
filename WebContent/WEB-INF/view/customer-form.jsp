@@ -9,11 +9,11 @@
 		method="POST" class="ui form">
 		<div class="field">
 			<label>First Name</label>
-			<form:input path="firstName" required="true"/>
+			<form:input path="firstName" required="true" pattern="^[a-zA-Z0-9]+$"/>
 		</div>
 		<div class="field">
 			<label>Last Name</label>
-			<form:input path="lastName" required="true"/>
+			<form:input path="lastName" required="true" pattern="^[a-zA-Z0-9]+$"/>
 		</div>
 		<div class="field">
 			<label>Email</label>
