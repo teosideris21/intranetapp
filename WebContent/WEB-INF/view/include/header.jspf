@@ -22,8 +22,7 @@
 </head>
 <body>
 	<nav class="ui fixed menu teal inverted navbar">
-		<a href="" class="brand item">Customers</a> <a
-			href="${pageContext.request.contextPath}/customer/list" class="item">List
+		 <a	href="${pageContext.request.contextPath}/customer/list" class="item">List
 			All Customers</a> <a
 			href="${pageContext.request.contextPath}/login/showLoginForm"
 			class="item">Log out</a>
