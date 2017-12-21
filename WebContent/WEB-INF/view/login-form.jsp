@@ -7,10 +7,10 @@
 	<form:form action="loginForm" modelAttribute="customer" method="POST"
 		class="ui form">
 		<div class="field">
-			<label>Username</label> <input type="text" name="username" pattern="^[a-zA-Z0-9]+$"/>
+			<label>Username</label> <input type="text" name="username"/>
 		</div>
 		<div class="field">
-			<label>Password</label> <input type="password" name="password" pattern="^[a-zA-Z0-9]+$"/>
+			<label>Password</label> <input type="password" name="password"/>
 		</div>
 
 		<button class="ui button" type="submit">Login</button>

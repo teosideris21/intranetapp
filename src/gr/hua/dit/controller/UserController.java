@@ -54,6 +54,10 @@ public class UserController {
 			request.setAttribute("create", "Create Failed");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/admin-form.jsp");
 			rd.forward(request, response);
+		} catch (java.lang.IllegalStateException e) {
+			request.setAttribute("update_msg", "Username does not exist");
+			RequestDispatcher rd = request.getRequestDispatcher("/user/adminForm");
+			rd.forward(request, response);
 		}
 		return "redirect:/user/adminForm";
 	}
@@ -205,4 +209,6 @@ public class UserController {
 		return "redirect:/user/technicianForm";
 	}
 
+	
+	
 }

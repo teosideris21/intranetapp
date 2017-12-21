@@ -7,7 +7,7 @@
 		<input type="text" name="name" placeholder="name" pattern="^[a-zA-Z]+$"/>&nbsp &nbsp &nbsp
 		<input type="text" name="surname" placeholder="surname" pattern="^[a-zA-Z]+$"/> &nbsp
 		&nbsp &nbsp<input type="text" name="email" placeholder="email" /> <br>
-		<br> <input type="text" name="username" placeholder="userid" pattern="^[a-zA-Z0-9]+$"/>&nbsp
+		<br> <input type="text" name="username" placeholder="userid"/>&nbsp
 		&nbsp &nbsp <input type="password" name="password"
 			placeholder="password" pattern="^[a-zA-Z0-9]+$"/><br>
 		<h4>Role</h4>
@@ -45,7 +45,7 @@
 		<div>
 			<h3>Update a user</h3>
 			<form action="updateUser">
-				<input type="text" name="username" placeholder="username" pattern= "^[a-zA-Z0-9]+$"><br>
+				<input type="text" name="username" placeholder="username"><br>
 				<br> <input type="submit" value="Update">
 			</form>
 			<br>

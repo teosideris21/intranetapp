@@ -9,15 +9,15 @@
 		method="POST" class="ui form">
 		<div class="field">
 			<label>First Name</label>
-			<form:input path="firstName" />
+			<form:input path="firstName" required="true"/>
 		</div>
 		<div class="field">
 			<label>Last Name</label>
-			<form:input path="lastName" />
+			<form:input path="lastName" required="true"/>
 		</div>
 		<div class="field">
 			<label>Email</label>
-			<form:input path="email" />
+			<form:input path="email" required="true"/>
 		</div>
 		<button class="ui button" type="submit">Save</button>
 	</form:form>

@@ -32,7 +32,7 @@
 	<form:form action="deleteCustomer" modelAttribute="customer"
 		method="POST" class="ui form">
 		<div class="field">
-			<input type="text" name="id" placeholder="Select ID" />
+			<input type="text" name="id" placeholder="Select ID" required="true" pattern="^[0-9]+$"/>
 		</div>
 		<button class="ui button" type="submit">Delete</button>
 	</form:form>
