@@ -51,8 +51,8 @@ public class UserController {
 		try {
 			userService.saveUser(user);
 		} catch (DataIntegrityViolationException e) {
-			request.setAttribute("create", "create failed");
-			RequestDispatcher rd = request.getRequestDispatcher("/user/adminForm");
+			request.setAttribute("create", "Create Failed");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/admin-form.jsp");
 			rd.forward(request, response);
 		}
 		return "redirect:/user/adminForm";
@@ -65,7 +65,7 @@ public class UserController {
 			userService.deleteUser(user);
 		} catch (java.lang.IllegalArgumentException e) {
 			request.setAttribute("delete_msg", "Username does not exist");
-			RequestDispatcher rd = request.getRequestDispatcher("/user/adminForm");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/admin-form.jsp");
 			rd.forward(request, response);
 		}
 		return "redirect:/user/adminForm";
@@ -101,8 +101,8 @@ public class UserController {
 		try {
 			userService.saveUser(user);
 		} catch (DataIntegrityViolationException e) {
-			request.setAttribute("update_msg", "Update failed. Try again!");
-			RequestDispatcher rd = request.getRequestDispatcher("/user/UpdateUser");
+			request.setAttribute("update_msg", "Username does not exist");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/update-user.jsp");
 			rd.forward(request, response);
 		}
 		return "redirect:/user/adminForm";
@@ -127,8 +127,9 @@ public class UserController {
 		if (vhcl == null) {
 
 			request.setAttribute("message", "This vehicle does not exist into DB");
-			RequestDispatcher rd = request.getRequestDispatcher("/user/secretariatForm");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
 			rd.forward(request, response);
+
 			return "redirect:/user/secretariatForm";
 
 		} else {
@@ -137,13 +138,13 @@ public class UserController {
 					if (vhcl.getSub_type() > 1800) {
 
 						request.setAttribute("payment", "80");
-						RequestDispatcher rd = request.getRequestDispatcher("/user/secretariatForm");
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
 						rd.forward(request, response);
 						return "redirect:/user/secretariatForm";
 					} else {
 
 						request.setAttribute("payment", "50");
-						RequestDispatcher rd = request.getRequestDispatcher("/user/secretariatForm");
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
 						rd.forward(request, response);
 						return "redirect:/user/secretariatForm";
 					}
@@ -151,13 +152,13 @@ public class UserController {
 					if (vhcl.getSub_type() > 3) {
 
 						request.setAttribute("payment", "150");
-						RequestDispatcher rd = request.getRequestDispatcher("/user/secretariatForm");
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
 						rd.forward(request, response);
 						return "redirect:/user/secretariatForm";
 					} else {
 
 						request.setAttribute("payment", "100");
-						RequestDispatcher rd = request.getRequestDispatcher("/user/secretariatForm");
+						RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
 						rd.forward(request, response);
 						return "redirect:/user/secretariatForm";
 					}
@@ -166,7 +167,7 @@ public class UserController {
 			} else {
 
 				request.setAttribute("payment", "200");
-				RequestDispatcher rd = request.getRequestDispatcher("/user/secretariatForm");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/secretariat-form.jsp");
 				rd.forward(request, response);
 				return "redirect:/user/secretariatForm";
 			}
@@ -192,16 +193,14 @@ public class UserController {
 		try {
 			if (vehicle == null) {
 				request.setAttribute("create", "You have to fill all the fields");
-				RequestDispatcher rd = request.getRequestDispatcher("/user/technicianForm");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/technician-form.jsp");
 				rd.forward(request, response);
-				return "redirect:/user/technicianForm";
 			}
 			userService.createCard(vehicle);
 		} catch (DataIntegrityViolationException e) {
 			request.setAttribute("create", "You have to fill all the fields");
-			RequestDispatcher rd = request.getRequestDispatcher("/user/technicianForm");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/technician-form.jsp");
 			rd.forward(request, response);
-			return "redirect:/user/technicianForm";
 		}
 		return "redirect:/user/technicianForm";
 	}

@@ -37,7 +37,11 @@
 		<button class="ui button" type="submit">Delete</button>
 	</form:form>
 
-
+<%
+				String delete_msg = (String) request.getAttribute("delete_msg");
+				if (delete_msg != null)
+					out.println("<font color=red size=4px>" + delete_msg + "</font>");
+			%>
 
 
 </div>

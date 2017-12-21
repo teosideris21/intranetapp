@@ -4,12 +4,12 @@
 
 	<h3>Create a new User</h3>
 	<form action="createUser" method="POST">
-		<input type="text" name="name" placeholder="name" />&nbsp &nbsp &nbsp
-		<input type="text" name="surname" placeholder="surname" /> &nbsp
+		<input type="text" name="name" placeholder="name" pattern="^[a-zA-Z]+$"/>&nbsp &nbsp &nbsp
+		<input type="text" name="surname" placeholder="surname" pattern="^[a-zA-Z]+$"/> &nbsp
 		&nbsp &nbsp<input type="text" name="email" placeholder="email" /> <br>
-		<br> <input type="text" name="username" placeholder="userid" />&nbsp
+		<br> <input type="text" name="username" placeholder="userid" pattern="^[a-zA-Z0-9]+$"/>&nbsp
 		&nbsp &nbsp <input type="password" name="password"
-			placeholder="password" /><br>
+			placeholder="password" pattern="^[a-zA-Z0-9]+$"/><br>
 		<h4>Role</h4>
 		<select id="role" name="role">
 			<option value="Administrator">Administrator</option>

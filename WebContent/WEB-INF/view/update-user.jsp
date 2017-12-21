@@ -13,10 +13,10 @@
 			<label>Password</label> <input type="password" name="password" />
 		</div>
 		<div class="field">
-			<label>Name</label> <input type="text" name="name" />
+			<label>Name</label> <input type="text" name="name" pattern="^[a-zA-Z]+$"/>
 		</div>
 		<div class="field">
-			<label>Surname</label> <input type="text" name="surname" />
+			<label>Surname</label> <input type="text" name="surname" pattern="^[a-zA-Z]+$"/>
 		</div>
 		<div class="field">
 			<label>Email</label> <input type="text" name="email" />
