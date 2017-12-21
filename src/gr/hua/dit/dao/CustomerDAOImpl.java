@@ -15,21 +15,19 @@ public class CustomerDAOImpl implements CustomerDAO {
 	// inject the session factory
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public List<Customer> getCustomers() {
 		// get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// create a query
-		Query<Customer> query = currentSession.createQuery("from Customer order by lastName", 
-				Customer.class);
-		
-		
+		Query<Customer> query = currentSession.createQuery("from Customer order by lastName", Customer.class);
+
 		// execute the query and get the results list
 		List<Customer> customers = query.getResultList();
-				
-		//return the results
+
+		// return the results
 		return customers;
 	}
 
@@ -37,32 +35,31 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public void saveCustomer(Customer customer) {
 		// get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// save the customer
 		currentSession.save(customer);
-		
+
 	}
 
 	@Override
 	public Customer getCustomer(int id) {
 		// get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
-		//get and return Customer
+
+		// get and return Customer
 		Customer customer = currentSession.get(Customer.class, id);
 		return customer;
 	}
 
 	@Override
 	public void deleteCustomer(Customer customer) {
-		
+
 		// get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
-		// find the customer
-		 customer = currentSession.get(Customer.class, customer.getId());
 
-		
+		// find the customer
+		customer = currentSession.get(Customer.class, customer.getId());
+
 		// delete customer
 		currentSession.delete(customer);
 	}

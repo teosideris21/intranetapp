@@ -2,20 +2,22 @@
 
 <div class="ui segment">
 
-	<br><h3>Add a Customer</h3>
+	<br>
+	<h3>Add a Customer</h3>
 
-	<form:form action="saveCustomer" modelAttribute="customer" method="POST" class="ui form">
+	<form:form action="saveCustomer" modelAttribute="customer"
+		method="POST" class="ui form">
 		<div class="field">
-			<label>First Name</label> 
-			<form:input path="firstName"/>
+			<label>First Name</label>
+			<form:input path="firstName" />
 		</div>
 		<div class="field">
 			<label>Last Name</label>
-			<form:input path="lastName"/>
+			<form:input path="lastName" />
 		</div>
 		<div class="field">
-			<label>Email</label> 
-			<form:input path="email"/>
+			<label>Email</label>
+			<form:input path="email" />
 		</div>
 		<button class="ui button" type="submit">Save</button>
 	</form:form>

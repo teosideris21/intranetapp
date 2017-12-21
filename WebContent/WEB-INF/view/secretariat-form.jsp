@@ -16,7 +16,8 @@
 	</form>
 <form action="searchDB" modelAttribute="vehicleDB" method="POST">
 	<h3>Search db</h3>
-<input type="text" name="id" placeholder="License Plate" pattern= "^[a-zA-Z0-9]+$" /><br><br>
+		<input type="text" name="id" placeholder="License Plate"
+			pattern="^[a-zA-Z0-9]+$" /><br><br>
 
 	
 <input type="radio" name="intime" value="false">Arrived out of time<br>

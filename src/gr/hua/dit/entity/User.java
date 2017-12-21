@@ -4,12 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-
 
 @XmlRootElement(name = "User")
 @Entity
@@ -37,14 +34,15 @@ public class User implements Serializable {
 
 	@Column(name = "name")
 	private String name;
-	
+
 	@Column(name = "surname")
 	private String surname;
-	
+
 	@Column(name = "email")
 	private String email;
-	
-	public User() {}
+
+	public User() {
+	}
 
 	public User(String username, String password, String role, String name, String surname, String email) {
 		super();
@@ -109,7 +107,5 @@ public class User implements Serializable {
 		return "User [username=" + username + ", password=" + password + ", role=" + role + ", name=" + name
 				+ ", surname=" + surname + ", email=" + email + "]";
 	}
-	
-	
-}
 
+}

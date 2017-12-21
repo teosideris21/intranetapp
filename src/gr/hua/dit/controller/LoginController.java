@@ -1,11 +1,8 @@
 package gr.hua.dit.controller;
 
 import java.io.IOException;
-import java.net.URLEncoder;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import gr.hua.dit.entity.User;
-import gr.hua.dit.entity.Vehicle;
-import gr.hua.dit.entity.Vehicle_card;
 import gr.hua.dit.service.LoginService;
 
 @Controller
@@ -44,7 +38,6 @@ public class LoginController {
 		// save the customer using the service
 		User loguser = loginService.loginUser(request.getParameter("username"));
 
-		String username = request.getParameter("username");
 		if (loguser == null) {
 			request.setAttribute("message", "This user does not exist");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/login-form.jsp");

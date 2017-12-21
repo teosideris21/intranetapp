@@ -45,7 +45,7 @@
 		<div>
 			<h3>Update a user</h3>
 			<form action="updateUser">
-				<input type="text" name="username" placeholder="username"><br>
+				<input type="text" name="username" placeholder="username" pattern= "^[a-zA-Z0-9]+$"><br>
 				<br> <input type="submit" value="Update">
 			</form>
 			<br>

@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,7 +34,7 @@ public class Vehicle_card implements Serializable {
 
 	@Column(name = "model")
 	private String model;
-	
+
 	@Column(name = "cc")
 	private int cc;
 
@@ -46,8 +44,8 @@ public class Vehicle_card implements Serializable {
 	public Vehicle_card() {
 	}
 
-	public Vehicle_card(String license_plate, String inspection_date, String next_inspection_date, String model,
-			int cc, String results) {
+	public Vehicle_card(String license_plate, String inspection_date, String next_inspection_date, String model, int cc,
+			String results) {
 		super();
 		this.license_plate = license_plate;
 		this.inspection_date = inspection_date;

@@ -2,13 +2,10 @@ package gr.hua.dit.controller;
 
 import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.hibernate.exception.GenericJDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -16,13 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.util.NestedServletException;
-
-import gr.hua.dit.entity.Customer;
 import gr.hua.dit.entity.User;
 import gr.hua.dit.entity.Vehicle;
 import gr.hua.dit.entity.Vehicle_card;
 import gr.hua.dit.service.LoginService;
+import gr.hua.dit.service.UserService;
 
 @Controller
 @RequestMapping("/user")
@@ -30,6 +25,9 @@ public class UserController {
 
 	@Autowired
 	private LoginService loginService;
+
+	@Autowired
+	private UserService userService;
 
 	@GetMapping("/adminForm")
 	public String adminForm(Model model) {
@@ -51,8 +49,8 @@ public class UserController {
 	public String createUser(HttpServletRequest request, @ModelAttribute("user") User user,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
-		loginService.saveUser(user);
-		}catch(DataIntegrityViolationException e) {
+			userService.saveUser(user);
+		} catch (DataIntegrityViolationException e) {
 			request.setAttribute("create", "create failed");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/admin-form.jsp");
 			rd.forward(request, response);
@@ -63,9 +61,13 @@ public class UserController {
 	@RequestMapping("/deleteUser")
 	public String deleteUser(HttpServletRequest request, @ModelAttribute("user") User user,
 			HttpServletResponse response) throws ServletException, IOException {
-		System.out.println(request.getParameter("username"));
-		loginService.deleteUser(user);
-		System.out.println("OK5");
+		try {
+			userService.deleteUser(user);
+		} catch (java.lang.IllegalArgumentException e) {
+			request.setAttribute("delete_msg", "Username does not exist");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/admin-form.jsp");
+			rd.forward(request, response);
+		}
 		return "redirect:/user/adminForm";
 	}
 
@@ -84,7 +86,7 @@ public class UserController {
 	public String updateUser(HttpServletRequest request, @ModelAttribute("user") User user,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
-			loginService.deleteUser(user);
+			userService.deleteUser(user);
 		} catch (java.lang.IllegalArgumentException e) {
 			request.setAttribute("update_msg", "Username does not exist");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/admin-form.jsp");
@@ -94,8 +96,15 @@ public class UserController {
 	}
 
 	@RequestMapping("/updateUseradd")
-	public String updateUseradd(HttpServletRequest request, @ModelAttribute("user") User user) {
-		loginService.saveUser(user);
+	public String updateUseradd(HttpServletRequest request, @ModelAttribute("user") User user,
+			HttpServletResponse response) throws ServletException, IOException {
+		try {
+			userService.saveUser(user);
+		} catch (DataIntegrityViolationException e) {
+			request.setAttribute("update_msg", "Username does not exist");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/update-user.jsp");
+			rd.forward(request, response);
+		}
 		return "redirect:/user/adminForm";
 	}
 
@@ -114,7 +123,7 @@ public class UserController {
 	public String searchVehicle(HttpServletRequest request, @ModelAttribute("vehicleDB") Vehicle vehicle,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		Vehicle vhcl = loginService.checkDB(request.getParameter("id"));
+		Vehicle vhcl = userService.checkDB(request.getParameter("id"));
 		if (vhcl == null) {
 
 			request.setAttribute("message", "This vehicle does not exist into DB");
@@ -179,10 +188,20 @@ public class UserController {
 	}
 
 	@RequestMapping("/createCard")
-	public String createCard(HttpServletRequest request, @ModelAttribute("vehicle_card") Vehicle_card vehicle) {
-		System.out.println(vehicle.getLicense_plate());
-		loginService.createCard(vehicle);
-		System.out.println("OK1");
+	public String createCard(HttpServletRequest request, @ModelAttribute("vehicle_card") Vehicle_card vehicle,
+			HttpServletResponse response) throws ServletException, IOException {
+		try {
+			if (vehicle == null) {
+				request.setAttribute("create", "You have to fill all the fields");
+				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/technician-form.jsp");
+				rd.forward(request, response);
+			}
+			userService.createCard(vehicle);
+		} catch (DataIntegrityViolationException e) {
+			request.setAttribute("create", "You have to fill all the fields");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/technician-form.jsp");
+			rd.forward(request, response);
+		}
 		return "redirect:/user/technicianForm";
 	}
 

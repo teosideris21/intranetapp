@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @XmlRootElement(name = "Customer")
 @Entity
 @Table(name = "customer")
@@ -38,9 +37,9 @@ public class Customer implements Serializable {
 
 	@Column(name = "email")
 	private String email;
-	
+
 	public Customer() {
-		
+
 	}
 
 	public Customer(String firstName, String lastName, String email) {
@@ -86,7 +85,5 @@ public class Customer implements Serializable {
 	public String toString() {
 		return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + "]";
 	}
-	
-	
 
 }

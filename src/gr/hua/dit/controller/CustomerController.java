@@ -1,7 +1,10 @@
 package gr.hua.dit.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -79,9 +82,16 @@ public class CustomerController {
 	}
 
 	@PostMapping("/deleteCustomer")
-	public String deleteCustomer(@ModelAttribute("customer") Customer customer) {
+	public String deleteCustomer(HttpServletRequest request, @ModelAttribute("customer") Customer customer,
+			HttpServletResponse response) throws ServletException, IOException {
 		// create model attribute to get form data
-		customerService.deleteCustomer(customer);
+		try {
+			customerService.deleteCustomer(customer);
+		} catch (java.lang.IllegalArgumentException e) {
+			request.setAttribute("update_msg", "Username does not exist");
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/delete-customer.jsp");
+			rd.forward(request, response);
+		}
 		return "redirect:/user/secretariatForm";
 	}
 

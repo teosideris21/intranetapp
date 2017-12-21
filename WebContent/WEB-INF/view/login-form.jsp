@@ -13,7 +13,9 @@
 			<label>Password</label> <input type="password" name="password" />
 		</div>
 
-		<button class="ui button" type="submit">Login</button> <br> <br>
+		<button class="ui button" type="submit">Login</button>
+		<br>
+		<br>
 		<%
 			String login_msg = (String) request.getAttribute("message");
 				if (login_msg != null)
