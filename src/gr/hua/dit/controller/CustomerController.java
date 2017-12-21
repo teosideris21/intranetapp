@@ -82,15 +82,14 @@ public class CustomerController {
 	}
 
 	@PostMapping("/deleteCustomer")
-	public String deleteCustomer(HttpServletRequest request, @ModelAttribute("customer") Customer customer,
-			HttpServletResponse response) throws ServletException, IOException {
+	public String deleteCustomer(HttpServletRequest request, @ModelAttribute("customer") Customer customer
+			) throws ServletException, IOException {
 		// create model attribute to get form data
 		try {
 			customerService.deleteCustomer(customer);
 		} catch (java.lang.IllegalArgumentException e) {
 			request.setAttribute("update_msg", "Username does not exist");
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/delete-customer.jsp");
-			rd.forward(request, response);
+			return "redirect:/customer/showDeleteForm";
 		}
 		return "redirect:/user/secretariatForm";
 	}

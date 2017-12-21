@@ -7,19 +7,19 @@
 	<form:form action="updateUseradd" modelAttribute="customer"
 		method="POST" class="ui form">
 		<div class="field">
-			<label>Username</label> <input type="text" name="username" />
+			<label>Username</label> <input type="text" name="username" required="true"/>
 		</div>
 		<div class="field">
-			<label>Password</label> <input type="password" name="password" />
+			<label>Password</label> <input type="password" name="password" required="true"/>
 		</div>
 		<div class="field">
-			<label>Name</label> <input type="text" name="name" pattern="^[a-zA-Z]+$"/>
+			<label>Name</label> <input type="text" name="name" pattern="^[a-zA-Z]+$" required="true"/>
 		</div>
 		<div class="field">
-			<label>Surname</label> <input type="text" name="surname" pattern="^[a-zA-Z]+$"/>
+			<label>Surname</label> <input type="text" name="surname" pattern="^[a-zA-Z]+$" required="true"/>
 		</div>
 		<div class="field">
-			<label>Email</label> <input type="text" name="email" />
+			<label>Email</label> <input type="text" name="email" required="true"/>
 		</div>
 		<div class="field">
 			<select id="role" name="role">

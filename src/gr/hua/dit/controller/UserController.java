@@ -202,13 +202,39 @@ public class UserController {
 			}
 			userService.createCard(vehicle);
 		} catch (DataIntegrityViolationException e) {
-			request.setAttribute("create", "You have to fill all the fields");
+			request.setAttribute("create", "Vehicle already exist!");
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/technician-form.jsp");
 			rd.forward(request, response);
 		}
 		return "redirect:/user/technicianForm";
 	}
 
-	
-	
+	@GetMapping("/UpdateVehicleCard")
+	public String updateVehicleCard(Model model) {
+		// create model attribute to get form data
+		Vehicle_card vehicle_crd = new Vehicle_card();
+		model.addAttribute("user", vehicle_crd);
+
+		// add page title
+		model.addAttribute("pageTitle", "Update Vehicle Card");
+		return "update-card";
+	}
+
+	@RequestMapping("/updateCardDelete")
+	public String updateCardDelete(HttpServletRequest request, @ModelAttribute("vehicle_card") Vehicle_card vehicle,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		userService.deleteCard(vehicle);
+
+		return "redirect:/user/UpdateVehicleCard";
+	}
+
+	@RequestMapping("/updateCardadd")
+	public String updateCardAdd(HttpServletRequest request, @ModelAttribute("vehicle_card") Vehicle_card vehicle,
+			HttpServletResponse response) throws ServletException, IOException {
+
+		userService.createCard(vehicle);
+
+		return "redirect:/user/technicianForm";
+	}
 }

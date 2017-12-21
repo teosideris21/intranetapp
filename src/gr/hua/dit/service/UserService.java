@@ -15,4 +15,7 @@ public interface UserService {
 	public void updateUser(User user);
 
 	public void createCard(Vehicle_card vehicle);
+	
+	public void deleteCard(Vehicle_card vehicle);
+
 }

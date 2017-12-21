@@ -51,4 +51,10 @@ public class UserServiceImpl implements UserService {
 	public void createCard(Vehicle_card vehicle) {
 		techDao.createCard(vehicle);
 	}
+	
+	@Override
+	@Transactional
+	public void deleteCard(Vehicle_card vehicle) {
+		techDao.deleteCard(vehicle);
+	}
 }
