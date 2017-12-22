@@ -22,7 +22,7 @@ import gr.hua.dit.service.UserService;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	public static String vhcl=null;
+	public static String vhcl = null;
 	@Autowired
 	private LoginService loginService;
 
@@ -223,8 +223,14 @@ public class UserController {
 	@RequestMapping("/updateCardDelete")
 	public String updateCardDelete(HttpServletRequest request, @ModelAttribute("vehicle_card") Vehicle_card vehicle,
 			HttpServletResponse response) throws ServletException, IOException {
-		vhcl=vehicle.getLicense_plate().toString();
-		userService.deleteCard(vehicle);
+		try {
+			vhcl = vehicle.getLicense_plate().toString();
+			userService.deleteCard(vehicle);
+		} catch (java.lang.IllegalArgumentException e) {
+			request.setAttribute("update_msg", "License plate does not exist");
+			RequestDispatcher rd = request.getRequestDispatcher("/user/adminForm");
+			rd.forward(request, response);
+		}
 
 		return "redirect:/user/UpdateVehicleCard";
 	}

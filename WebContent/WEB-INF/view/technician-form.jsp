@@ -35,3 +35,8 @@
 		<br>
 		<br> <input type="submit" value="Update">
 	</form>
+	<%
+				String update_msg = (String) request.getAttribute("update_msg");
+				if (update_msg != null)
+					out.println("<font color=red size=4px>" + update_msg + "</font>");
+			%>
