@@ -22,7 +22,7 @@ import gr.hua.dit.service.UserService;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
+	public static String vhcl=null;
 	@Autowired
 	private LoginService loginService;
 
@@ -223,7 +223,7 @@ public class UserController {
 	@RequestMapping("/updateCardDelete")
 	public String updateCardDelete(HttpServletRequest request, @ModelAttribute("vehicle_card") Vehicle_card vehicle,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		vhcl=vehicle.getLicense_plate().toString();
 		userService.deleteCard(vehicle);
 
 		return "redirect:/user/UpdateVehicleCard";
@@ -232,7 +232,7 @@ public class UserController {
 	@RequestMapping("/updateCardadd")
 	public String updateCardAdd(HttpServletRequest request, @ModelAttribute("vehicle_card") Vehicle_card vehicle,
 			HttpServletResponse response) throws ServletException, IOException {
-
+		vehicle.setLicense_plate(vhcl);
 		userService.createCard(vehicle);
 
 		return "redirect:/user/technicianForm";

@@ -31,7 +31,7 @@
 	<h3>Update Vehicle Card</h3>
 	<br>
 	<form action="updateCardDelete">
-		<input type="text" name="license_plate" placeholder="License Plate">
+		<input type="text" name="license_plate" placeholder="License Plate"  pattern="^[a-zA-Z0-9]+$" required="true">
 		<br>
 		<br> <input type="submit" value="Update">
 	</form>

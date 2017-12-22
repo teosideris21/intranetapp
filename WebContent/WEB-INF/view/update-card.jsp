@@ -7,9 +7,6 @@
 	<form:form action="updateCardadd" modelAttribute="customer"
 		method="POST" class="ui form">
 		<div class="field">
-			<label>License Plate</label> <input type="text" name="license_plate" pattern="^[a-zA-Z0-9]+$" required="true"/>
-		</div>
-		<div class="field">
 			<label>Inspection Date</label> <input type="date" name="inspection_date" required="true"/>
 		</div>
 		<div class="field">
